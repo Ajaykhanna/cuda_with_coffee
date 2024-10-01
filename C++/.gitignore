@@ -1,0 +1,4 @@
+# ignore file types
+*.exe
+*.dat
+*.out
