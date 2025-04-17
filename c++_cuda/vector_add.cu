@@ -1,3 +1,21 @@
+/**
+ * @file vector_add.cu
+ * @brief CUDA implementation of vector addition
+ * 
+ * This program demonstrates parallel vector addition using CUDA.
+ * It creates two random vectors of size 2^16, transfers them to the GPU,
+ * performs parallel addition, and verifies the results.
+ * 
+ * Key features:
+ * - Uses CUDA kernel for parallel vector addition
+ * - Demonstrates host-device memory management
+ * - Includes error checking and result verification
+ * - Shows basic CUDA thread/block organization
+ * 
+ * Compilation: nvcc vector_add.cu -o vector_add
+ * Execution: ./vector_add
+ */
+
 #include <cuda_runtime.h>
 #include <device_launch_parameters.h>
 #include <stdlib.h>

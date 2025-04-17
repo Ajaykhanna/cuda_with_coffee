@@ -1,3 +1,25 @@
+/**
+ * @file vector_add_unified_memory.cu
+ * @brief CUDA program demonstrating vector addition using Unified Memory
+ * 
+ * This program implements parallel vector addition using CUDA Unified Memory,
+ * which simplifies memory management between CPU and GPU. It demonstrates:
+ * - Unified Memory allocation using cudaMallocManaged
+ * - Asynchronous memory prefetching
+ * - Parallel vector addition using CUDA threads
+ * - Random vector generation and result verification
+ * 
+ * The program adds two vectors of size 2^16 (65536 elements) where each element
+ * is a random integer between 0 and 99. The addition is performed in parallel
+ * on the GPU using multiple thread blocks.
+ * 
+ * Key Features:
+ * - Uses cudaMallocManaged for automatic memory management
+ * - Implements memory prefetching for better performance
+ * - Includes result verification
+ * - Demonstrates basic CUDA kernel execution
+ */
+
 #include <cuda_runtime.h>
 #include <device_launch_parameters.h>
 #include <stdlib.h>

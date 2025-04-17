@@ -1,3 +1,22 @@
+/**
+ * @file matmul_baseline.cu
+ * @brief CUDA implementation of matrix multiplication using a baseline approach
+ * 
+ * This program demonstrates matrix multiplication using CUDA, implementing a basic
+ * algorithm without shared memory optimizations. It includes:
+ * - Matrix multiplication kernel implementation
+ * - Random matrix generation
+ * - Result verification
+ * - Memory management for both host and device
+ * 
+ * The program multiplies two n x n matrices where n = 1024 (2^10).
+ * Each matrix element is randomly generated between 0 and 99.
+ * The implementation uses a 16x16 thread block size.
+ * 
+ * @note This is a baseline implementation and does not include optimizations 
+ * like shared memory or memory coalescing.
+ */
+
 #include <cuda_runtime.h>
 #include <device_launch_parameters.h>
 #include <stdlib.h>
@@ -96,45 +115,4 @@ int main()
 	rand_matrix(h_b, n);
 
 	// Copy data from Host to Device
-	cudaMemcpy(d_a, h_a, bytes, cudaMemcpyHostToDevice);
-	cudaMemcpy(d_b, h_b, bytes, cudaMemcpyHostToDevice);
-
-	// Threads per block
-	int BLOCK_SIZE = 16;
-
-	// Blocks in each dimension (No padding)
-	int GRID_SIZE = (int)ceil(n / BLOCK_SIZE);
-
-	// Use dim3 objects
-	dim3 grid(GRID_SIZE, GRID_SIZE);
-	dim3 threads(BLOCK_SIZE, BLOCK_SIZE);
-
-	// Launch GPU Kernel/Function on default stream w/o sharedMem
-	matMul<<<grid, threads>>>(d_a, d_b, d_c, n);
-
-	// Copy sum array c from device to host
-	cudaMemcpy(h_c, d_c, bytes, cudaMemcpyDeviceToHost);
-
-	// Check Results for errors
-	verify_results(h_a, h_b, h_c, n);
-
-	//	for (int i = 0; i < int(10); i++){
-	//		for (int j = 0; j < int(10); j++){
-	//			printf(h_a[i][j]);
-	//		}
-	//		printf("The sum of A vector element %d + and B vector element %d is = %d \n", h_a[i], h_b[i], h_c[i]);
-	//	}
-	printf("TASK DONE SUCCESSFULLY\n");
-
-	// Free host memory
-	free(h_a);
-	free(h_b);
-	free(h_c);
-
-	// Free memory on device
-	cudaFree(d_a);
-	cudaFree(d_b);
-	cudaFree(d_c);
-
-	return 0;
-}
+	cudaMemcpy(d_a, h_a, bytes, cudaMemcpyHostToDevice
